@@ -5,8 +5,12 @@ export const FavouritesContext = createContext();
 export const FavouritesProvider = ({children}) => {
     const [favourite, setFavourite] = useState([]);
 
+    const handleAddFavourite = (job) => {
+        setFavourite(prev => [...prev, job])
+    }
+
     return(
-        <FavouritesContext.Provider value={{favourite}}>
+        <FavouritesContext.Provider value={{favourite, handleAddFavourite}}>
             {children}
         </FavouritesContext.Provider>
     )
