@@ -13,8 +13,12 @@ export const FavouritesProvider = ({children}) => {
         setFavourite(prev => prev.filter(jobs => jobs.id !== job.id));
     }
 
+    const isFavourite = (id) => {
+        return favourite.some(jobs => jobs.id === id);
+    }
+
     return(
-        <FavouritesContext.Provider value={{favourite, handleAddFavourite}}>
+        <FavouritesContext.Provider value={{favourite, handleAddFavourite, handleRemoveFavourite, isFavourite}}>
             {children}
         </FavouritesContext.Provider>
     )
