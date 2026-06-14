@@ -9,6 +9,10 @@ export const FavouritesProvider = ({children}) => {
         setFavourite(prev => [...prev, job])
     }
 
+    const handleRemoveFavourite = (job) => {
+        setFavourite(prev => prev.filter(jobs => jobs.id !== job.id));
+    }
+
     return(
         <FavouritesContext.Provider value={{favourite, handleAddFavourite}}>
             {children}
