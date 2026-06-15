@@ -1,13 +1,16 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export const FavouritesContext = createContext();
 
 export const FavouritesProvider = ({children}) => {
-    const [favourite, setFavourite] = useState([]);
+    const [favourite, setFavourite] = useState(() => {
+        const savedFavourite = localStorage.getItem('job');
+        return savedFavourite !== null ? JSON.parse(savedFavourite) : [];
+    });
 
     useEffect(() => {
-        localStorage.setItem("favourites", JSON.stringify(favourite));
-    }, [favourite]);
+        localStorage.setItem('job', JSON.stringify(favourite))
+    },[favourite]);
 
     const handleAddFavourite = (job) => {
         setFavourite(prev => [...prev, job])
