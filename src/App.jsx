@@ -3,7 +3,19 @@ import Home from "./pages/home";
 import JobDetails from "./pages/jobDetail";
 import Favourites from "./pages/favourites";
 import Navbar from "./components/Navbar";
+import { useEffect } from "react";
+import {useFetch} from './hooks/useFetch';
+import { useJobs } from "./context/JobsContext";
 function App() {
+  const {setJobs} = useJobs();
+  const {data} = useFetch("https://remotive.com/api/remote-jobs?limit=10");
+
+  useEffect(() =>{
+    if(data && data.jobs){
+      setJobs(data.jobs);
+    }
+  },[data]);
+  
   return (
     <>
       <BrowserRouter>
