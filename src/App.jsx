@@ -5,7 +5,7 @@ import Favourites from "./pages/favourites";
 import Navbar from "./components/Navbar";
 import { useEffect } from "react";
 import {useFetch} from './hooks/useFetch';
-import { useJobs } from "./context/JobsContext";
+import { useJobs } from "./hooks/useJobs";
 function App() {
   const {setJobs} = useJobs();
   const {data} = useFetch("https://remotive.com/api/remote-jobs?limit=10");
@@ -14,7 +14,7 @@ function App() {
     if(data && data.jobs){
       setJobs(data.jobs);
     }
-  },[data]);
+  },[data, setJobs]);
   
   return (
     <>

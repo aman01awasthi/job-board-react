@@ -1,8 +1,8 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const FavouritesContext = createContext();
 
-export const FavouritesProvider = ({children}) => {
+export default function FavouritesProvider({children}) {
     const [favourite, setFavourite] = useState(() => {
         const savedFavourite = localStorage.getItem('job');
         return savedFavourite !== null ? JSON.parse(savedFavourite) : [];
@@ -30,5 +30,3 @@ export const FavouritesProvider = ({children}) => {
         </FavouritesContext.Provider>
     )
 }
-
-export const useFavourite = () => useContext(FavouritesContext);

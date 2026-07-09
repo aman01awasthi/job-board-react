@@ -1,9 +1,8 @@
-import { createContext, useContext, useState } from "react";
-
+import { createContext, useState } from "react";
 
 export const JobsContext = createContext();
 
-export const JobsProvider = ({children}) => {
+export default function JobsProvider({children}) {
     const[jobs, setJobs] = useState([]);
 
     return(
@@ -12,5 +11,3 @@ export const JobsProvider = ({children}) => {
         </JobsContext.Provider>
     )
 }
-
-export const useJobs = () => useContext(JobsContext);
