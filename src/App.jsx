@@ -4,17 +4,20 @@ import JobDetails from "./pages/jobDetail";
 import Favourites from "./pages/favourites";
 import Navbar from "./components/Navbar";
 import { useEffect } from "react";
-import {useFetch} from './hooks/useFetch';
-import { useJobs } from "./hooks/useJobs";
+import useFetch from './hooks/useFetch';
+import { useJobs } from "./context/JobsContext";
+
 function App() {
-  const {setJobs} = useJobs();
-  const {data} = useFetch("https://remotive.com/api/remote-jobs?limit=10");
+  const {setJobs, setLoading, setError} = useJobs();
+  const {data, loading, error} = useFetch("https://remotive.com/api/remote-jobs?limit=10");
 
   useEffect(() =>{
+    setLoading(loading);
+    setError(error);
     if(data && data.jobs){
       setJobs(data.jobs);
     }
-  },[data, setJobs]);
+  },[data, loading, error, setJobs, setLoading, setError]);
   
   return (
     <>

@@ -1,11 +1,11 @@
 import { useState, useMemo } from 'react';
-import { useJobs } from '../hooks/useJobs';
+import { useJobs } from '../context/JobsContext';
 import SearchBar from '../components/SearchBar';
 import FilterBar from '../components/FilterBar';
 import JobList from '../components/JobList';
 
 const Home = () => {
-  const { jobs } = useJobs();
+  const { jobs, loading, error } = useJobs();
   const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState({
     category: '',
@@ -26,6 +26,28 @@ const Home = () => {
       return matchesSearch && matchesCategory && matchesJobType && matchesLocation;
     });
   }, [jobs, searchQuery, filters]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-violet-600 mx-auto mb-4"></div>
+          <p className="text-lg text-slate-600">Loading jobs...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-lg text-red-600 font-semibold">Error loading jobs</p>
+          <p className="text-slate-600 mt-2">{error.message}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
